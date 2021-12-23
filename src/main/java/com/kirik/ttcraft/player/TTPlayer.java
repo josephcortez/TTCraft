@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class TTPlayer {
 
-    private TTCraft plugin;
+    private TTCraft plugin = TTCraft.instance;
 
     private final File playerConfigFile;
     public FileConfiguration playerConfig;
@@ -26,8 +26,7 @@ public class TTPlayer {
     private String nickname;
 
     private final Player bukkitPlayer;
-    //private Rank rank;
-    private Home home = null;
+    private Home home;
 
     public TTPlayer(UUID uuid) {
         this.bukkitPlayer = Bukkit.getPlayer(uuid);
@@ -45,11 +44,11 @@ public class TTPlayer {
         this(player.getUniqueId());
     }
 
-    public FileConfiguration getPlayerConfig(){
-        if(playerConfigFile.exists()) {
+    public FileConfiguration getPlayerConfig() {
+        if (playerConfigFile.exists()) {
             plugin.sendConsoleMsg("Player file for " + uuid + " loaded");
             return YamlConfiguration.loadConfiguration(playerConfigFile);
-        }else {
+        } else {
             try {
                 FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerConfigFile);
                 loadPlayerDefaults(playerConfig);
@@ -74,12 +73,12 @@ public class TTPlayer {
     }
 
     public void saveConfig() {
-        if(!playerConfigFile.exists()) {
+        if (!playerConfigFile.exists()) {
             playerConfig = getPlayerConfig();
         }
         try {
             playerConfig.save(playerConfigFile);
-        }catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             plugin.sendConsoleError("Unable to save player file " + getUUID() + ". Reason:" + e);
         }
@@ -106,7 +105,7 @@ public class TTPlayer {
     }
 
     public Home getHome() {
-        if(home == null)
+        if (home == null)
             return new Home(plugin.getServer().getWorld("world").getSpawnLocation());
         Location loc = playerConfig.getLocation("home");
         this.home = new Home(loc);

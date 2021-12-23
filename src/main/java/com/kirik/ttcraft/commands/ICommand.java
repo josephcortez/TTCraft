@@ -20,7 +20,7 @@ public abstract class ICommand implements CommandExecutor {
     @Retention(RetentionPolicy.RUNTIME) public @interface Usage { String value(); }
     @Retention(RetentionPolicy.RUNTIME) public @interface Level { int value(); }
 
-    protected static TTCraft plugin;
+    protected static TTCraft plugin = TTCraft.instance;
 
     @Override
     public final boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {

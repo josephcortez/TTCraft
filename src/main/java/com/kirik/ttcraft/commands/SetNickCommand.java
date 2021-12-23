@@ -16,7 +16,7 @@ public class SetNickCommand extends ICommand {
 
     @Override
     public boolean onCommandPlayer(Player player, Command command, String s, String[] args) throws TTCraftCommandException {
-        TTPlayer player_ = plugin.getOnlinePlayers().get(player.getUniqueId());
+        TTPlayer player_ = plugin.onlinePlayers.get(player.getUniqueId());
         String newNickname = args[0];
         if(newNickname.equalsIgnoreCase("reset")) {
             newNickname = "";

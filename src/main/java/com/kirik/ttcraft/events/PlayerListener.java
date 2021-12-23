@@ -39,7 +39,7 @@ public class PlayerListener implements Listener {
             }
         }
 
-        plugin.getOnlinePlayers().put(playerUUID, ttplayer);
+        plugin.onlinePlayers.put(playerUUID, ttplayer);
 
 
         if (!ttplayer.getNickname().equals("")) {
@@ -60,7 +60,7 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         UUID playerUUID = player.getUniqueId();
 
-        TTPlayer ttplayer = plugin.getOnlinePlayers().get(playerUUID);
+        TTPlayer ttplayer = plugin.onlinePlayers.get(playerUUID);
         try {
             ttplayer.playerConfig.save(ttplayer.getPlayerFile());
             plugin.sendConsoleMsg("Saved player file " + playerUUID);
@@ -68,7 +68,7 @@ public class PlayerListener implements Listener {
             plugin.sendConsoleError("Failed to save player file " + playerUUID + ". Reason: " + ex);
         }
 
-        plugin.getOnlinePlayers().remove(playerUUID);
+        plugin.onlinePlayers.remove(playerUUID);
 
         if (!ttplayer.getNickname().equals("")) {
             e.setQuitMessage("\u00a74[-] \u00a7r" + ttplayer.getNickname() + " \u00a7edisconnected!");
@@ -82,7 +82,7 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         UUID playerUUID = player.getUniqueId();
 
-        TTPlayer ttplayer = plugin.getOnlinePlayers().get(playerUUID);
+        TTPlayer ttplayer = plugin.onlinePlayers.get(playerUUID);
         try {
             ttplayer.playerConfig.save(ttplayer.getPlayerFile());
             plugin.sendConsoleMsg("Saved player file " + playerUUID);
@@ -90,7 +90,7 @@ public class PlayerListener implements Listener {
             plugin.sendConsoleError("Failed to save player file " + playerUUID + ". Reason: " + ex);
         }
 
-        plugin.getOnlinePlayers().remove(playerUUID);
+        plugin.onlinePlayers.remove(playerUUID);
 
         if (!ttplayer.getNickname().equals("")) {
             e.setLeaveMessage("\u00a74[-] \u00a7r" + ttplayer.getNickname() + " \u00a7ekicked! (" + e.getReason() + ")");
@@ -104,7 +104,7 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         UUID playerUUID = player.getUniqueId();
 
-        TTPlayer ttplayer = plugin.getOnlinePlayers().get(playerUUID);
+        TTPlayer ttplayer = plugin.onlinePlayers.get(playerUUID);
 
         String colorMessage = e.getMessage().replace("$", "\u00a7");
 

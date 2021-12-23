@@ -16,7 +16,7 @@ public class SetHomeCommand extends ICommand {
 
     @Override
     public boolean onCommandPlayer(Player player, Command command, String s, String[] args) throws TTCraftCommandException {
-        TTPlayer player_ = plugin.getOnlinePlayers().get(player.getUniqueId());
+        TTPlayer player_ = plugin.onlinePlayers.get(player.getUniqueId());
         Location newHome = player.getLocation();
         player_.setHome(new Home(newHome));
         plugin.sendPlayerMessage(player, "Set home!");

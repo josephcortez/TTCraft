@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -21,13 +22,19 @@ import java.util.logging.Level;
 
 public class TTCraft extends JavaPlugin {
 
+    public static TTCraft instance;
+
     // Dependencies
     private ProtocolManager protocolManager;
     /*private HologramManager hologramManager; // Took code from https://github.com/sainttx/Holograms and updated to 1.18.1
     private HologramEntityController hologramController;
     private Runnable updateTask = new HologramUpdateTask(this);*/
 
-    protected Map<UUID, TTPlayer> onlinePlayers;
+    public HashMap<UUID, TTPlayer> onlinePlayers = new HashMap<>();
+
+    public TTCraft() {
+        instance = this;
+    }
 
     @Override
     public void onEnable(){
@@ -77,10 +84,6 @@ public class TTCraft extends JavaPlugin {
     public void setDefaultMOTD() {
         getConfig().set("MOTD", "Welcome back to $4TT$6MC$f!");
         saveConfig();
-    }
-
-    public Map<UUID, TTPlayer> getOnlinePlayers() {
-        return onlinePlayers;
     }
 
     public ProtocolManager getProtocolManager() {
