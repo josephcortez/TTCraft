@@ -1,0 +1,26 @@
+name: TTCraft
+version: 1.0
+main: com.kirik.ttcraft.main.TTCraft
+api-version: 1.18
+depend: [ProtocolLib]
+authors: [kirik]
+description: Paper Plugin for Theta Tau Minecraft Server
+commands:
+  setnick:
+    description: Sets nickname of the player
+    usage: /setnick <nickname>
+  setspawn:
+    description: Sets spawn of the world
+    usage: /setspawn
+  spawn:
+    description: Teleports player to spawn
+    usage: /spawn
+  sethome:
+    description: Sets the home of the player
+    usage: /sethome
+  home:
+    description: Teleports player to their home. If there is no home, teleports them to spawn
+    usage: /home
+  test:
+    description: Test command
+    usage: /test
