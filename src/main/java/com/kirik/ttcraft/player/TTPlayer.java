@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class TTPlayer {
 
-    private final TTCraft plugin = TTCraft.instance;
+    private TTCraft plugin;
 
     private final File playerConfigFile;
     public FileConfiguration playerConfig;
@@ -38,7 +38,7 @@ public class TTPlayer {
 
         this.nickname = (playerConfig.getString("nickname") == null) ? "" : playerConfig.getString("nickname");
         this.home = (playerConfig.getLocation("home") == null) ?
-                new Home(plugin.getServer().getWorld("world").getSpawnLocation()) : new Home(playerConfig.getLocation("home"));
+                new Home(plugin.getWorldSpawn()) : new Home(playerConfig.getLocation("home"));
     }
 
     public TTPlayer(Player player) {
@@ -52,10 +52,9 @@ public class TTPlayer {
         }else {
             try {
                 FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerConfigFile);
-                //playerConfig.save(playerConfigFile);
                 loadPlayerDefaults(playerConfig);
                 plugin.sendConsoleMsg("Player file for " + uuid + " created");
-                playerConfig.save(playerConfigFile);
+                saveConfig();
                 return playerConfig;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -70,12 +69,9 @@ public class TTPlayer {
     }
 
     private void loadPlayerDefaults(FileConfiguration playerConfig) {
-        playerConfig.set("nickname", nickname);
+        playerConfig.set("nickname", getUsername());
+        playerConfig.set("home", getHome());
     }
-
-    /*public void setUUID(UUID uuid) {
-        this.uuid = uuid;
-    }*/
 
     public void saveConfig() {
         if(!playerConfigFile.exists()) {
@@ -92,10 +88,6 @@ public class TTPlayer {
     public UUID getUUID() {
         return uuid;
     }
-
-    /*public void setUsername(String username) {
-        this.username = username;
-    }*/
 
     public String getUsername() {
         return username;

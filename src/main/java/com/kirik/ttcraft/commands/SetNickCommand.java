@@ -16,7 +16,7 @@ public class SetNickCommand extends ICommand {
 
     @Override
     public boolean onCommandPlayer(Player player, Command command, String s, String[] args) throws TTCraftCommandException {
-        TTPlayer player_ = plugin.onlinePlayers.get(player.getUniqueId());
+        TTPlayer player_ = plugin.getOnlinePlayers().get(player.getUniqueId());
         String newNickname = args[0];
         if(newNickname.equalsIgnoreCase("reset")) {
             newNickname = "";
@@ -25,11 +25,6 @@ public class SetNickCommand extends ICommand {
         player_.setNickname(newNickname);
         player.setPlayerListName(newNickname);
         player.setDisplayName(newNickname);
-        /*Scoreboard mainScoreboard = plugin.getServer().getScoreboardManager().getMainScoreboard();
-        Team playerTeam = mainScoreboard.registerNewTeam("SLOT_" + plugin.getServer().getScoreboardManager().getMainScoreboard().getTeams().size());
-        playerTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
-        playerTeam.setDisplayName(player_.getNickname());
-        playerTeam.addEntry(player.getName());*/
         plugin.sendPlayerMessage(player, "Set nickname to " + newNickname);
         return true;
     }

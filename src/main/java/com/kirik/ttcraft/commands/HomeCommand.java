@@ -13,7 +13,7 @@ public class HomeCommand extends ICommand {
 
     @Override
     public boolean onCommandPlayer(Player player, Command command, String s, String[] args) throws TTCraftCommandException {
-        TTPlayer player_ = plugin.onlinePlayers.get(player.getUniqueId());
+        TTPlayer player_ = plugin.getOnlinePlayers().get(player.getUniqueId());
         player.teleport(player_.getHome().getFullLoc());
         plugin.sendPlayerMessage(player,"Teleported home!");
         return true;

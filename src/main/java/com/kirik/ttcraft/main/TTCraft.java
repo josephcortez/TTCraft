@@ -5,12 +5,11 @@ import com.comphenix.protocol.ProtocolManager;
 import com.kirik.ttcraft.commands.ICommand;
 import com.kirik.ttcraft.events.PlayerListener;
 import com.kirik.ttcraft.player.TTPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -22,31 +21,16 @@ import java.util.logging.Level;
 
 public class TTCraft extends JavaPlugin {
 
-    public static TTCraft instance;
-
     // Dependencies
     private ProtocolManager protocolManager;
     /*private HologramManager hologramManager; // Took code from https://github.com/sainttx/Holograms and updated to 1.18.1
     private HologramEntityController hologramController;
     private Runnable updateTask = new HologramUpdateTask(this);*/
 
-    /*public PlayerHelper playerHelper = new PlayerHelper(this);*/
-
-    public HashMap<UUID, TTPlayer> onlinePlayers = new HashMap<>();
-
-    public TTCraft(){
-        instance = this;
-    }
+    protected Map<UUID, TTPlayer> onlinePlayers;
 
     @Override
     public void onEnable(){
-        /*log("Plugin enabled");*/
-        /*config = new Configuration(getDataFolder());*/
-        /*getCommand("ping").setExecutor(commandHandler);
-        getCommand("spawn").setExecutor(commandHandler);
-        getCommand("setnick").setExecutor(commandHandler);
-        getCommand("setspawn").setExecutor(commandHandler);*/
-
         sendConsoleMsg("Loading Dependencies...");
         protocolManager = ProtocolLibrary.getProtocolManager();
         /*hologramManager = HologramLibrary.getHologramManager();*/
@@ -55,12 +39,14 @@ public class TTCraft extends JavaPlugin {
         sendConsoleMsg("Loading Config Defaults...");
         if(getWorldSpawn() == null) {
             setDefaultWorldSpawn();
+            sendConsoleMsg("WARNING: No spawn location found, setting to default...");
         }else{
             getServer().getWorld("world").setSpawnLocation(getWorldSpawn());
             saveConfig();
         }
         if(getMOTD() == null) {
             setDefaultMOTD();
+            sendConsoleMsg("WARNING: No MOTD, assigning default...");
         }
         sendConsoleMsg("Config Defaults Loaded.");
 
@@ -85,12 +71,16 @@ public class TTCraft extends JavaPlugin {
     }
 
     public String getMOTD() {
-        return getConfig().getString("MOTD").replace("$", "\u00a7");
+        return getConfig().getString("MOTD");
     }
 
     public void setDefaultMOTD() {
         getConfig().set("MOTD", "Welcome back to $4TT$6MC$f!");
         saveConfig();
+    }
+
+    public Map<UUID, TTPlayer> getOnlinePlayers() {
+        return onlinePlayers;
     }
 
     public ProtocolManager getProtocolManager() {
@@ -133,8 +123,4 @@ public class TTCraft extends JavaPlugin {
     public void sendPlayerMessage(Player target, String msg) {
         target.sendMessage("\u00a75[TT] \u00a7f" + msg);
     }
-
-    /*public void sendServerMessage(String msg){
-        getServer().broadcastMessage("\u00a75[TT] \u00a7f" + msg);
-    }*/
 }

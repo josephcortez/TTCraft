@@ -20,11 +20,7 @@ public abstract class ICommand implements CommandExecutor {
     @Retention(RetentionPolicy.RUNTIME) public @interface Usage { String value(); }
     @Retention(RetentionPolicy.RUNTIME) public @interface Level { int value(); }
 
-    protected final TTCraft plugin;
-
-    public ICommand() {
-        plugin = TTCraft.instance;
-    }
+    protected static TTCraft plugin;
 
     @Override
     public final boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
@@ -66,7 +62,7 @@ public abstract class ICommand implements CommandExecutor {
             ICommand command = ctor.newInstance();
             if(!commandClass.isAnnotationPresent(Name.class))
                 return;
-            TTCraft.instance.getCommand(commandClass.getAnnotation(Name.class).value()).setExecutor(command);
+            plugin.getCommand(commandClass.getAnnotation(Name.class).value()).setExecutor(command);
         }catch(Exception ignored){}
     }
 
